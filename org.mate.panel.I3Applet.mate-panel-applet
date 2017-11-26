@@ -1,0 +1,13 @@
+[Applet Factory]
+Id=I3AppletFactory
+InProcess=false
+Location=/home/matt/dev/matei3applet/matei3applet.py
+Name=I3 Applet Factory
+Description=I3 Applet Factory
+ 
+[I3Applet]
+Name=i3 Workspaces
+Description=Shows i3 workspaces
+Icon=mate
+MateComponentId=OAFIID:MATE_I3Applet;
+
