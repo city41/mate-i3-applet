@@ -47,7 +47,7 @@ class i3bar(object):
         log('on_workspace_event')
 
         if workspaces:
-            self.set_workspace_label(workspaces)
+            GLib.idle_add(self.set_workspace_label, workspaces)
 
     def set_workspace_label(self, workspaces):
         log('set_workspace_label')
@@ -67,7 +67,7 @@ class i3bar(object):
         new_label = ''.join(labels)
 
         if new_label != self.workspace_label.get_label():
-            GLib.idle_add(self.workspace_label.set_label, new_label)
+            self.workspace_label.set_label(new_label)
 
     def show(self):
         self.applet.show_all()
