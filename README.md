@@ -1,4 +1,4 @@
-# MATE I3 Workspace Applet
+# MATE i3 Workspace Applet
 
 ![screenshot](https://raw.github.com/city41/mate-i3-applet/master/screenshot.png)
 
