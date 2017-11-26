@@ -4,13 +4,9 @@
 
 This applet shows the current state of i3 workspaces when using i3 as your window manager in MATE.
 
-## Very Alpha!
+## Pretty Beta
 
-This thing is currently very raw. Not only that, this project is my first time using GTK, MATE applets *and* Python. So yeah, not really ready for general usage. There are some bugs I am fighting.
-
-## Known Issue
-
-Pretty often when receiving a message from i3, it will throw `UnicodeDecodeError`. Seems it either received an incomplete message from i3, or it's truncating the message somehow.
+The applet seems to generally work pretty well, but it's still raw around the edges.
 
 ## Tested On
 
@@ -29,3 +25,7 @@ No installer yet, for now:
 ## How to Work on the applet
 
 Install as above. Then edit the python files and when ready, `killall python3` will cause mate-panel to ask you if you want to reload the applet, say yes. I hardly use anything written in python, so killall does no real harm on my box. Alternatively you can use mate-panel-test-applets` to launch the applet.
+
+## Todo
+
+Check the github issues, tracking all known issues and work there
