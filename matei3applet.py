@@ -7,7 +7,7 @@ from gi.repository import Gtk
 from gi.repository import GLib
 from gi.repository import MatePanelApplet
 
-import i3
+from i3conn import I3Conn
 
 have_logged = False
 
@@ -26,20 +26,18 @@ def log(message):
     file.close()
 
 class i3bar(object):
-    def on_workspace_button_click(self, event, button):
-        i3.command('workspace', button.get_label())
-
     def destroy(self, event):
-        self.close_sub(event)
+        self.close_sub()
 
     def __init__(self, applet):
         log('initting')
         self.applet = applet
+        self.i3conn = I3Conn()
         self.init_widgets()
 
         self.set_initial_label()
 
-        self.open_sub(None)
+        self.open_sub()
         self.applet.connect("destroy", self.destroy)
 
     def init_widgets(self):
@@ -48,21 +46,18 @@ class i3bar(object):
         self.applet.add(self.workspace_label)
 
     def set_initial_label(self):
-        socket = i3.Socket()
-        self.set_workspace_label(socket.get('get_workspaces'))
-        socket.close()
+        self.set_workspace_label(self.i3conn.get_workspaces())
 
-    def close_sub(self, event):
+    def close_sub(self):
         log('close_sub')
         if self.subscription:
             self.subscription.close()
 
-    def open_sub(self, event):
+    def open_sub(self):
         log('open_sub')
-        callback = lambda data, workspaces, _: self.on_workspace_event(data, workspaces)
-        self.subscription = i3.Subscription(callback, 'workspace')
+        self.subscription = self.i3conn.subscribe(self.on_workspace_event)
 
-    def on_workspace_event(self, data, workspaces):
+    def on_workspace_event(self, workspaces):
         log('on_workspace_event')
 
         if workspaces:
