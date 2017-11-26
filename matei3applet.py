@@ -8,22 +8,8 @@ from gi.repository import GLib
 from gi.repository import MatePanelApplet
 
 from i3conn import I3Conn
+from log import log
 
-have_logged = False
-
-def log(message):
-    global have_logged
-    mode = 'w'
-
-    if have_logged:
-        mode = 'a'
-
-    have_logged = True
-
-    file = open('/home/matt/dev/matei3applet/log.txt', mode)
-    file.write(message)
-    file.write('\n')
-    file.close()
 
 class i3bar(object):
     def destroy(self, event):
