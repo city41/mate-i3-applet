@@ -47,22 +47,27 @@ class i3bar(object):
         log('on_workspace_event')
 
         if workspaces:
-            GLib.idle_add(self.set_workspace_label, workspaces)
+            self.set_workspace_label(workspaces)
 
     def set_workspace_label(self, workspaces):
         log('set_workspace_label')
 
-        new_label = ''
-        for workspace in workspaces:
-            new_label += ' '
+        def get_workspace_bgcolor(workspace):
+            if workspace['urgent']:
+                return '#e53a14'
             if workspace['focused']:
-                new_label += '<span background="#6587bf"><b> '
-            new_label += workspace['name']
-            if workspace['focused']:
-                new_label += ' </b></span>'
-    
+                return '#6587bf'
+            return '#333333'
+
+        def workspace_to_label(workspace):
+            bgcolor = get_workspace_bgcolor(workspace)
+            return '<span background="%s"><b> %s </b></span>' % (bgcolor, workspace['name'])
+
+        labels = map(workspace_to_label, workspaces)
+        new_label = ''.join(labels)
+
         if new_label != self.workspace_label.get_label():
-            self.workspace_label.set_label(new_label)
+            GLib.idle_add(self.workspace_label.set_label, new_label)
 
     def show(self):
         self.applet.show_all()
