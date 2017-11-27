@@ -17,7 +17,7 @@ I am using Ubuntu MATE 16.04 with i3 4.11
 No installer yet, for now:
 
 1. edit the org.mate.panel.* files and fix the path to `matei3applet.py`
-2. `sudo cp org.mate.panel.applet.I3Applet.server /usr/share/dbus-1/services`
+2. `sudo cp org.mate.panel.applet.I3Applet.service /usr/share/dbus-1/services`
 3. `sudo cp org.mate.panel.I3Applet.mate-panel-applet /usr/share/mate-panel/applets`
 4. log out and back in
 5. On a MATE panel, choose 'Add to Panel...' and add the i3 panel
