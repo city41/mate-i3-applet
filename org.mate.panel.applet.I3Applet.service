@@ -1,3 +1,3 @@
 [D-BUS Service]
 Name=org.mate.panel.applet.I3AppletFactory
-Exec=/home/matt/dev/matei3applet/matei3applet.py
+Exec=/home/matt/dev/mate-i3-applet/matei3applet.py
