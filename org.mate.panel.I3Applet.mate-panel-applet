@@ -1,7 +1,7 @@
 [Applet Factory]
 Id=I3AppletFactory
 InProcess=false
-Location=/home/matt/dev/matei3applet/matei3applet.py
+Location=/home/matt/dev/mate-i3-applet/matei3applet.py
 Name=I3 Applet Factory
 Description=I3 Applet Factory
  
