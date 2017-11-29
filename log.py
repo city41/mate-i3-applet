@@ -1,3 +1,5 @@
+import os
+
 SHOULD_LOG = False
 have_logged = False
 
@@ -13,7 +15,7 @@ def log(message):
 
         have_logged = True
 
-        file = open('/home/matt/dev/matei3applet/log.txt', mode)
+        file = open(os.path.expanduser("~/.matei3applet.log"), mode)
         file.write(message)
         file.write('\n')
         file.close()

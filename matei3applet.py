@@ -36,12 +36,11 @@ class i3bar(object):
 
     def close_sub(self):
         log('close_sub')
-        if self.subscription:
-            self.subscription.close()
+        self.i3conn.close()
 
     def open_sub(self):
         log('open_sub')
-        self.subscription = self.i3conn.subscribe(self.on_workspace_event)
+        self.i3conn.subscribe(self.on_workspace_event)
 
     def on_workspace_event(self, workspaces):
         log('on_workspace_event')

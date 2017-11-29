@@ -344,6 +344,15 @@ class Connection(object):
         self.cmd_socket.connect(self.socket_path)
         self.sub_socket = None
 
+    def close(self):
+        self.event_socket_teardown()
+        self.cmd_socket_teardown()
+
+    def cmd_socket_teardown(self):
+        if self.cmd_socket:
+            self.cmd_socket.shutdown(socket.SHUT_WR)
+        self.cmd_socket = None
+
     def _pack(self, msg_type, payload):
         """
         Packs the given message type and payload. Turns the resulting
