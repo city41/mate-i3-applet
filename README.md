@@ -4,13 +4,13 @@
 
 This applet shows the current state of i3 workspaces when using i3 as your window manager in MATE.
 
-## Pretty Beta
+## Status
 
-The applet seems to generally work pretty well, but it's still raw around the edges.
+Needs a better install story, but seems pretty stable. I've been using it all day long at work with no issues
 
 ## Tested On
 
-I am using Ubuntu MATE 16.04 with i3 4.11
+Ubuntu MATE 16.04 with i3 4.11
 
 ## How to Install
 
@@ -21,10 +21,6 @@ No installer yet, for now:
 3. `sudo cp org.mate.panel.I3Applet.mate-panel-applet /usr/share/mate-panel/applets`
 4. log out and back in
 5. On a MATE panel, choose 'Add to Panel...' and add the i3 panel
-
-## How to Work on the applet
-
-Install as above. Then edit the python files and when ready, `killall python3` will cause mate-panel to ask you if you want to reload the applet, say yes. I hardly use anything written in python, so killall does no real harm on my box. Alternatively you can use mate-panel-test-applets` to launch the applet.
 
 ## Todo
 
