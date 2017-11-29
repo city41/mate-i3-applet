@@ -23,12 +23,27 @@ class WorkspaceSub(threading.Thread):
 
 class I3Conn(object):
     def __init__(self):
-        self.create_connection()
+        self.try_to_connect()
+
+    def try_to_connect(self, tries=5):
+        con = None
+        while not con and tries > 0:
+            try:
+                con = self.create_connection()
+            except:
+                tries -= 1
+                time.sleep(0.3)
+
+        if not con:
+            raise "Failed to connect to i3, is it running?"
+        else:
+            self.con = con
 
     def create_connection(self):
         log('I3Conn create_connection')
-        self.con = i3ipc.Connection()
-        self.con.on('ipc_shutdown', self.restart)
+        con = i3ipc.Connection()
+        con.on('ipc_shutdown', self.restart)
+        return con
 
     def get_workspaces(self):
         return self.con.get_workspaces()
@@ -49,19 +64,8 @@ class I3Conn(object):
         log('I3Conn restart')
         self.close()
 
-        tries = 5
-        while not self.con and tries > 0:
-            try:
-                self.create_connection()
-            except:
-                tries -= 1
-                time.sleep(0.3)
-
-        log('after create_connection')
+        self.try_to_connect()
 
         if self.con and self.callback:
             self.subscribe(self.callback)
-        else:
-            raise "Failed to restart, is i3 still running?"
 
-        

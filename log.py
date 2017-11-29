@@ -1,6 +1,6 @@
 import os
 
-SHOULD_LOG = False
+SHOULD_LOG = True
 have_logged = False
 
 def log(message):
