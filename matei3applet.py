@@ -10,6 +10,31 @@ from gi.repository import MatePanelApplet
 from i3conn import I3Conn
 from log import log
 
+DEFAULT_COLORS = {
+    'background': '#000000', 
+    'statusline': '#ffffff',
+    'separator': '#666666',
+
+    'binding_mode_border': '#2f343a',
+    'binding_mode_bg': '#900000',
+    'binding_mode_text': '#ffffff',
+
+    'active_workspace_border': '#333333',
+    'active_workspace_bg': '#5f676a',
+    'active_workspace_text': '#ffffff',
+
+    'inactive_workspace_border': '#333333',
+    'inactive_workspace_bg': '#222222',
+    'inactive_workspace_text': '#888888',
+
+    'urgent_workspace_border': '#2f343a',
+    'urgent_workspace_bg': '#900000',
+    'urgent_workspace_text': '#ffffff',
+
+    'focused_workspace_border': '#4c7899',
+    'focused_workspace_bg': '#285577',
+    'focused_workspace_text': '#ffffff'
+}
 
 class i3bar(object):
     def destroy(self, event):
@@ -21,6 +46,8 @@ class i3bar(object):
         self.i3conn = I3Conn()
         self.init_widgets()
 
+        self.colors = self.init_colors()
+        log('colors: ' + str(self.colors))
         self.set_initial_label()
 
         self.open_sub()
@@ -33,6 +60,19 @@ class i3bar(object):
 
     def set_initial_label(self):
         self.set_workspace_label(self.i3conn.get_workspaces())
+
+    def init_colors(self):
+        global DEFAULT_COLORS
+
+        bar_ids = self.i3conn.get_bar_config_list()
+
+        colors = None
+        while not colors and bar_ids:
+            bar_id = bar_ids.pop()
+            bar = self.i3conn.get_bar_config(bar_id)
+            colors = bar['colors']
+
+        return colors or DEFAULT_COLORS
 
     def close_sub(self):
         log('close_sub')
@@ -53,10 +93,17 @@ class i3bar(object):
 
         def get_workspace_bgcolor(workspace):
             if workspace['urgent']:
-                return '#e53a14'
+                return self.colors['urgent_workspace_bg']
             if workspace['focused']:
-                return '#6587bf'
-            return '#333333'
+                return self.colors['focused_workspace_bg']
+            return self.colors['active_workspace_bg']
+
+        def get_workspace_fgcolor(workspace):
+            if workspace['urgent']:
+                return self.colors['urgent_workspace_text']
+            if workspace['focused']:
+                return self.colors['focused_workspace_text']
+            return self.colors['active_workspace_text']
 
         def workspace_to_label(workspace):
             bgcolor = get_workspace_bgcolor(workspace)

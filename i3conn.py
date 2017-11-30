@@ -48,6 +48,12 @@ class I3Conn(object):
     def get_workspaces(self):
         return self.con.get_workspaces()
 
+    def get_bar_config_list(self):
+        return self.con.get_bar_config_list()
+
+    def get_bar_config(self, bar_id):
+        return self.con.get_bar_config(bar_id)
+
     def subscribe(self, callback):
         if not self.con:
             raise "subscribing but there is no connection"
