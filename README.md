@@ -6,7 +6,7 @@ This applet shows the current state of i3 workspaces when using i3 as your windo
 
 ## Tested On
 
-Ubuntu MATE 16.04 with i3 4.11
+Ubuntu MATE 16.04, MATE 1.12.1, with i3 4.11
 
 ## How to Install
 
