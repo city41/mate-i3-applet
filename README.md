@@ -8,7 +8,7 @@ This applet shows the current state of i3 workspaces when using i3 as your windo
 1. shows all workspaces in a similar fashion as i3bar
 2. urgent workspaces highlight same as i3bar
 3. clicking a workspace goes to that workspace
-4. uses the same colors as your i3bar in your i3 config (see below.
+4. uses the same colors as your i3bar in your i3 config (see below)
 5. robust, reconnects if i3 relaunches
 
 ## Tested On
