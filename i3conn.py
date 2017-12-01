@@ -20,7 +20,7 @@ class WorkspaceSub(threading.Thread):
 
         while not self.con.event_socket_poll():
             log('loop')
-
+            
 class I3Conn(object):
     def __init__(self):
         self.try_to_connect()
@@ -53,6 +53,28 @@ class I3Conn(object):
 
     def get_bar_config(self, bar_id):
         return self.con.get_bar_config(bar_id)
+
+    # TODO: this is a hack to get workspace switching working.
+    # The problem is listening to i3 events needs to be on its own
+    # thread because it constantly blocks. So that means sending a command
+    # is taking place on the main thread(s), I suspect GTK spins up more than
+    # one thread or uses a thread pool. So the gtk thread(s) can't use the same
+    # connection, as they will trip over themselves and
+    # clobber the socket. The hack is to create a new connection each time, which 
+    # opens its own independent socket to i3.
+    # 
+    # ways to fix this:
+    # 1) figure out how to make this a critical section on the gtk thread
+    # 2) spin up a third thread who's job is to send commands to i3, use a queue
+    # 3) figure out how to use coroutines and ditch threads altogether
+    #
+    # to anyone reading this, I'm brand new to python, which is why I'm stumbling on this
+    #
+    def go_to_workspace(self, workspace_name):
+        log('go to workspace: ' + workspace_name)
+        throwawayCon = i3ipc.Connection()
+        throwawayCon.command('workspace ' + workspace_name)
+        throwawayCon.close()
 
     def subscribe(self, callback):
         if not self.con:

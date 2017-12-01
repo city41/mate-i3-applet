@@ -37,29 +37,32 @@ DEFAULT_COLORS = {
 }
 
 class i3bar(object):
-    def destroy(self, event):
-        self.close_sub()
-
     def __init__(self, applet):
         log('initting')
         self.applet = applet
+        self.applet.connect("destroy", self.destroy)
         self.i3conn = I3Conn()
-        self.init_widgets()
 
         self.colors = self.init_colors()
         log('colors: ' + str(self.colors))
-        self.set_initial_label()
+
+        self.init_widgets()
+        self.set_initial_buttons()
 
         self.open_sub()
-        self.applet.connect("destroy", self.destroy)
+
+    def __del__(self):
+        self.destroy(None)
+
+    def destroy(self, event):
+        self.close_sub()
 
     def init_widgets(self):
-        self.workspace_label = Gtk.Label()
-        self.workspace_label.set_use_markup(True)
-        self.applet.add(self.workspace_label)
+        self.box = Gtk.HBox()
+        self.applet.add(self.box)
 
-    def set_initial_label(self):
-        self.set_workspace_label(self.i3conn.get_workspaces())
+    def set_initial_buttons(self):
+        self.set_workspace_buttons(self.i3conn.get_workspaces())
 
     def init_colors(self):
         global DEFAULT_COLORS
@@ -86,10 +89,17 @@ class i3bar(object):
         log('on_workspace_event')
 
         if workspaces:
-            GLib.idle_add(self.set_workspace_label, workspaces)
+            GLib.idle_add(self.set_workspace_buttons, workspaces)
 
-    def set_workspace_label(self, workspaces):
-        log('set_workspace_label')
+    def go_to_workspace(self, workspace):
+        if not workspace['focused']:
+            self.i3conn.go_to_workspace(workspace['name'])
+
+    def set_workspace_buttons(self, workspaces):
+        log('set_workspace_buttons')
+
+        for child in self.box.get_children():
+            self.box.remove(child)
 
         def get_workspace_bgcolor(workspace):
             if workspace['urgent']:
@@ -109,11 +119,18 @@ class i3bar(object):
             bgcolor = get_workspace_bgcolor(workspace)
             return '<span background="%s"><b> %s </b></span>' % (bgcolor, workspace['name'])
 
-        labels = map(workspace_to_label, workspaces)
-        new_label = ''.join(labels)
+        def get_button(workspace):
+            button = Gtk.EventBox()
+            label = Gtk.Label(workspace_to_label(workspace))
+            label.set_use_markup(True)
+            button.add(label)
+            button.connect("button_press_event", lambda w,e:  self.go_to_workspace(workspace))
+            return button
 
-        if new_label != self.workspace_label.get_label():
-            self.workspace_label.set_label(new_label)
+        for workspace in workspaces:
+            self.box.pack_start(get_button(workspace), False, False, 0)
+
+        self.box.show_all()
 
     def show(self):
         self.applet.show_all()
