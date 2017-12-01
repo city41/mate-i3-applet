@@ -21,6 +21,8 @@ Requires Python 3, no other dependencies
 
 1. Grab the most recent [release](https://github.com/city41/mate-i3-applet/releases)
 2. `sudo ./setup.py install`
+3. `killall mate-panel` - this should kill then bring mate panel back, and it will now know about the i3 applet
+4. Right click a panel, choose 'Add to panel...' and add the i3 applet
 
 ## How to setup i3 for this applet
 
