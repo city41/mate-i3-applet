@@ -17,13 +17,10 @@ Ubuntu MATE 16.04 with MATE 1.12.1 and i3 4.11
 
 ## How to Install
 
-No installer yet, for now:
+Requires Python 3, no other dependencies
 
-1. edit the org.mate.panel.* files and fix the path to `matei3applet.py`
-2. `sudo cp org.mate.panel.applet.I3Applet.service /usr/share/dbus-1/services`
-3. `sudo cp org.mate.panel.I3Applet.mate-panel-applet /usr/share/mate-panel/applets`
-4. log out and back in
-5. On a MATE panel, choose 'Add to Panel...' and add the i3 panel
+1. clone this repo, or [download the archive](https://github.com/city41/mate-i3-applet/archive/master.zip)
+2. `sudo ./setup.py install`
 
 ## How to setup i3 for this applet
 
