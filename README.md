@@ -19,7 +19,7 @@ Ubuntu MATE 16.04 with MATE 1.12.1 and i3 4.11
 
 Requires Python 3, no other dependencies
 
-1. clone this repo, or [download the archive](https://github.com/city41/mate-i3-applet/archive/master.zip)
+1. Grab the most recent [release](https://github.com/city41/mate-i3-applet/releases)
 2. `sudo ./setup.py install`
 
 ## How to setup i3 for this applet
