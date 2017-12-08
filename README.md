@@ -16,7 +16,7 @@ This applet shows the current state of i3 workspaces when using i3 as your windo
 * Ubuntu MATE 16.04 with MATE 1.12.1 and i3 4.11
 * Ubuntu MATE 17.10 with MATE 1.18.0 and i3 4.13 (see caveat just below)
 
-## Using on MATE 1.18.0+
+## Using on MATE 1.18.0+ with GTK3
 
 MATE 1.18.0 made the switch to GTK 3, and so this applet does not work. I'll address that properly eventually, but to fix it, edit matei3applet.py. Towards the top, change
 
