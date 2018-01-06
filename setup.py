@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-#* a simple i3 workspace applet for MATE Desktolp
+#* a simple i3 workspace applet for MATE Desktop
 #* Copyright (c) 2017 Matt Greer <matt.e.greer@gmail.com>
 #* see README for more information
 
