@@ -73,4 +73,4 @@ Check the github issues, tracking all known issues and work there
 
 ## License
 
-This applet is using the BSD license. I also copied i3-ipc's source over into this applet because I needed the latest version and its not yet published ti PyPI. i3-ipc is also licensed under the BSD license.
+This applet is using the BSD license. I also copied i3-ipc's source over into this applet because I needed the latest version and its not yet published to PyPI. i3-ipc is also licensed under the BSD license.
