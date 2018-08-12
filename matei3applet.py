@@ -149,13 +149,6 @@ class i3bar(object):
             self.box.pack_start(get_button(workspace), False, False, 0)
 
         self.box.pack_start(self.modeLabel, False, False, 0)
-
-        # if mode != 'default':
-        #     modeLabel = Gtk.Label('<span background="%s"><b> %s </b></span>' % (self.colors['urgent_workspace_bg'], mode))
-        #     modeLabel.set_use_markup(True)
-        #     self.box.park_start(modeLabel, False, False, 0)
-            
-
         self.box.show_all()
 
     def show(self):
