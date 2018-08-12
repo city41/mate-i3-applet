@@ -97,6 +97,6 @@ class I3Conn(object):
 
         self.try_to_connect()
 
-        if self.con and self.callback:
-            self.subscribe(self.callback)
+        if self.con and self.callback and self.modeCallback:
+            self.subscribe(self.callback, self.modeCallback)
 
