@@ -5,11 +5,13 @@ import time
 from log import log
 
 class WorkspaceSub(threading.Thread):
-    def __init__(self, con, callback):
+    def __init__(self, con, callback, modeCallback):
         self.con = con
 
         i3callback = lambda _, workspaces: callback(self.con.get_workspaces())
+        i3ModeCallback = lambda _, mode: modeCallback(mode)
         self.con.on('workspace', i3callback)
+        self.con.on('mode', i3ModeCallback)
 
         threading.Thread.__init__(self)
         self.start()
@@ -76,11 +78,12 @@ class I3Conn(object):
         throwawayCon.command('workspace ' + workspace_name)
         throwawayCon.close()
 
-    def subscribe(self, callback):
+    def subscribe(self, callback, modeCallback):
         if not self.con:
             raise "subscribing but there is no connection"
         self.callback = callback
-        self.sub = WorkspaceSub(self.con, self.callback)
+        self.modeCallback = modeCallback
+        self.sub = WorkspaceSub(self.con, self.callback, self.modeCallback)
 
     def close(self):
         log('I3Conn close')

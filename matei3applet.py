@@ -60,6 +60,8 @@ class i3bar(object):
     def init_widgets(self):
         self.box = Gtk.HBox()
         self.applet.add(self.box)
+        self.modeLabel = Gtk.Label('')
+        self.modeLabel.set_use_markup(True)
 
     def set_initial_buttons(self):
         self.set_workspace_buttons(self.i3conn.get_workspaces())
@@ -83,13 +85,29 @@ class i3bar(object):
 
     def open_sub(self):
         log('open_sub')
-        self.i3conn.subscribe(self.on_workspace_event)
+        self.i3conn.subscribe(self.on_workspace_event, self.on_mode_event)
 
     def on_workspace_event(self, workspaces):
         log('on_workspace_event')
 
         if workspaces:
             GLib.idle_add(self.set_workspace_buttons, workspaces)
+
+    def on_mode_event(self, mode):
+        log('on_mode_event')
+        log(mode.change)
+
+        GLib.idle_add(self.set_mode_label_text, mode.change)
+
+    def set_mode_label_text(self, text):
+        if text == 'default':
+            self.modeLabel.set_text('')
+        else:
+            textToSet = '<span background="%s"><b> %s </b></span>' % (self.colors['urgent_workspace_bg'], text)
+            self.modeLabel.set_text(textToSet)
+
+        self.modeLabel.set_use_markup(True)
+        self.modeLabel.show()
 
     def go_to_workspace(self, workspace):
         if not workspace['focused']:
@@ -129,6 +147,14 @@ class i3bar(object):
 
         for workspace in workspaces:
             self.box.pack_start(get_button(workspace), False, False, 0)
+
+        self.box.pack_start(self.modeLabel, False, False, 0)
+
+        # if mode != 'default':
+        #     modeLabel = Gtk.Label('<span background="%s"><b> %s </b></span>' % (self.colors['urgent_workspace_bg'], mode))
+        #     modeLabel.set_use_markup(True)
+        #     self.box.park_start(modeLabel, False, False, 0)
+            
 
         self.box.show_all()
 
