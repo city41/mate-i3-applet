@@ -22,15 +22,9 @@ There has been [one report](https://github.com/city41/mate-i3-applet/issues/11#i
 
 ## Only supporting GTK3
 
-MATE 1.18.0 made the switch to GTK 3, and so this applet now assumes GTK 3. To go back to GTK 2, edit matei3applet.py, change
-
-`gi.require_version("Gtk", "3.0")`
-
-to
-
-`gi.require_version("Gtk", "2.0")`
-
-but please note I will not address GTK 2 specific issues. Please upgrade to a newer version of MATE instead.
+MATE 1.18.0 made the switch to GTK. This applet checks MATE version and imports appropriate version of GTK,
+however if you use GTK2 and encounter an issue, please upgrade before creating an issue. GTK2 specific issues
+will not be addressed.
 
 ## How to Install
 

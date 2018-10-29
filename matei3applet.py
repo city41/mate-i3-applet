@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
- 
-import gi
-gi.require_version("Gtk", "3.0")
-gi.require_version("MatePanelApplet", "4.0")
+
+from mate_version import import_gtk
+import_gtk()
+
 from gi.repository import Gtk
 from gi.repository import GLib
 from gi.repository import MatePanelApplet
