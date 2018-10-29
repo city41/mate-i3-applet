@@ -1,21 +1,30 @@
-import os
+import logging
+import sys
+from logging import handlers
+from pathlib import Path
 
-SHOULD_LOG = False
-have_logged = False
 
-def log(message):
-    global SHOULD_LOG
+def exception_handler(type, value, traceback):
+    logging.exception(
+        "Uncaught exception occurred: {}"
+        .format(value)
+    )
 
-    if SHOULD_LOG:
-        global have_logged
-        mode = 'w'
 
-        if have_logged:
-            mode = 'a'
-
-        have_logged = True
-
-        file = open(os.path.expanduser("~/.matei3applet.log"), mode)
-        file.write(message)
-        file.write('\n')
-        file.close()
+def setup_logging():
+    logger = logging.getLogger("")
+    logger.setLevel(logging.WARNING)
+    file_handler = handlers.TimedRotatingFileHandler(
+        Path().home() / ".mate-i3-applet.log",
+        when="D",
+        backupCount=1,
+        delay=True,
+    )
+    file_handler.setFormatter(
+        logging.Formatter(
+            '[%(levelname)s] %(asctime)s: %(message)s',
+            "%Y-%m-%d %H:%M:%S",
+        )
+    )
+    logger.addHandler(file_handler)
+    sys.excepthook = exception_handler

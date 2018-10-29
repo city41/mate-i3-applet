@@ -1,8 +1,9 @@
-import i3ipc
+import logging
 import threading
 import time
 
-from log import log
+import i3ipc
+
 
 class WorkspaceSub(threading.Thread):
     def __init__(self, con, callback, modeCallback):
@@ -17,11 +18,11 @@ class WorkspaceSub(threading.Thread):
         self.start()
         
     def run(self):
-        log('run')
+        logging.debug('run')
         self.con.event_socket_setup()
 
         while not self.con.event_socket_poll():
-            log('loop')
+            logging.debug('loop')
             
 class I3Conn(object):
     def __init__(self):
@@ -42,7 +43,7 @@ class I3Conn(object):
             self.con = con
 
     def create_connection(self):
-        log('I3Conn create_connection')
+        logging.debug('I3Conn create_connection')
         con = i3ipc.Connection()
         con.on('ipc_shutdown', self.restart)
         return con
@@ -73,7 +74,7 @@ class I3Conn(object):
     # to anyone reading this, I'm brand new to python, which is why I'm stumbling on this
     #
     def go_to_workspace(self, workspace_name):
-        log('go to workspace: ' + workspace_name)
+        logging.debug('go to workspace: {}'.format(workspace_name))
         throwawayCon = i3ipc.Connection()
         throwawayCon.command('workspace ' + workspace_name)
         throwawayCon.close()
@@ -86,13 +87,13 @@ class I3Conn(object):
         self.sub = WorkspaceSub(self.con, self.callback, self.modeCallback)
 
     def close(self):
-        log('I3Conn close')
+        logging.debug('I3Conn close')
         if self.con:
             self.con.close()
             self.con = None
 
     def restart(self, data=None):
-        log('I3Conn restart')
+        logging.debug('I3Conn restart')
         self.close()
 
         self.try_to_connect()

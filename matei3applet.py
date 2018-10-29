@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+import logging
+
+from log import setup_logging
+setup_logging()
+
 from mate_version import import_gtk
 import_gtk()
 
@@ -8,7 +13,6 @@ from gi.repository import GLib
 from gi.repository import MatePanelApplet
 
 from i3conn import I3Conn
-from log import log
 
 DEFAULT_COLORS = {
     'background': '#000000', 
@@ -38,13 +42,13 @@ DEFAULT_COLORS = {
 
 class i3bar(object):
     def __init__(self, applet):
-        log('initting')
+        logging.debug("initializing mate-i3-applet")
         self.applet = applet
         self.applet.connect("destroy", self.destroy)
         self.i3conn = I3Conn()
 
         self.colors = self.init_colors()
-        log('colors: ' + str(self.colors))
+        logging.debug('colors: {}'.format(str(self.colors)))
 
         self.init_widgets()
         self.set_initial_buttons()
@@ -80,22 +84,22 @@ class i3bar(object):
         return colors or DEFAULT_COLORS
 
     def close_sub(self):
-        log('close_sub')
+        logging.debug('close_sub')
         self.i3conn.close()
 
     def open_sub(self):
-        log('open_sub')
+        logging.debug('open_sub')
         self.i3conn.subscribe(self.on_workspace_event, self.on_mode_event)
 
     def on_workspace_event(self, workspaces):
-        log('on_workspace_event')
+        logging.debug('on_workspace_event')
 
         if workspaces:
             GLib.idle_add(self.set_workspace_buttons, workspaces)
 
     def on_mode_event(self, mode):
-        log('on_mode_event')
-        log(mode.change)
+        logging.debug('on_mode_event')
+        logging.debug(mode.change)
 
         GLib.idle_add(self.set_mode_label_text, mode.change)
 
@@ -114,7 +118,7 @@ class i3bar(object):
             self.i3conn.go_to_workspace(workspace['name'])
 
     def set_workspace_buttons(self, workspaces):
-        log('set_workspace_buttons')
+        logging.debug('set_workspace_buttons')
 
         for child in self.box.get_children():
             self.box.remove(child)
@@ -155,7 +159,7 @@ class i3bar(object):
         self.applet.show_all()
 
 def applet_factory(applet, iid, data):
-    log('iid: ' + iid)
+    logging.debug('iid: {}'.format(iid))
     if iid != "I3Applet":
        return False
  
