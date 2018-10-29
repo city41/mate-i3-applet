@@ -1,3 +1,4 @@
+import logging
 import re
 import subprocess
 import sys
@@ -22,6 +23,7 @@ def get_mate_version():
             ("mate-about", "--version")
         )
     except FileNotFoundError:
+        logging.error("command mate-about was not found")
         return None
     match = pattern.search(mate_about_output)
     return (MateVersion(
@@ -37,10 +39,12 @@ def import_gtk():
     version = get_mate_version()
     if version and version.major < 2 and version.minor < 18:
         gi.require_version("Gtk", "2.0")
+        logging.debug("GTK 2.0 loaded")
     elif version:
         gi.require_version("Gtk", "3.0")
+        logging.debug("GTK 3.0 loaded")
     else:
-        # TODO: add logging
+        logging.error("MATE is not installed, stopping execution..")
         sys.exit(1)
     gi.require_version('MatePanelApplet', '4.0')
 
