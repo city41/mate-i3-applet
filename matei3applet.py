@@ -15,7 +15,7 @@ from gi.repository import MatePanelApplet
 from i3conn import I3Conn
 
 DEFAULT_COLORS = {
-    'background': '#000000', 
+    'background': '#000000',
     'statusline': '#ffffff',
     'separator': '#666666',
 
@@ -107,7 +107,7 @@ class i3bar(object):
         if text == 'default':
             self.modeLabel.set_text('')
         else:
-            textToSet = '<span background="%s"><b> %s </b></span>' % (self.colors['urgent_workspace_bg'], text)
+            textToSet = '<span background="%s" color="%s"><b> %s </b></span>' % (self.colors['urgent_workspace_bg'], self.colors['urgent_workspace_text'], text)
             self.modeLabel.set_text(textToSet)
 
         self.modeLabel.set_use_markup(True)
@@ -139,7 +139,8 @@ class i3bar(object):
 
         def workspace_to_label(workspace):
             bgcolor = get_workspace_bgcolor(workspace)
-            return '<span background="%s"><b> %s </b></span>' % (bgcolor, workspace['name'])
+            fgcolor = get_workspace_fgcolor(workspace)
+            return '<span background="%s" color="%s"><b> %s </b></span>' % (bgcolor, fgcolor, workspace['name'])
 
         def get_button(workspace):
             button = Gtk.EventBox()
@@ -162,10 +163,10 @@ def applet_factory(applet, iid, data):
     logging.debug('iid: {}'.format(iid))
     if iid != "I3Applet":
        return False
- 
+
     bar = i3bar(applet)
     bar.show()
- 
+
     return True
 
 MatePanelApplet.Applet.factory_main("I3AppletFactory", True,
