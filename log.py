@@ -1,7 +1,7 @@
 import logging
 import sys
 from logging import handlers
-from pathlib import Path
+import os
 
 
 def exception_handler(type, value, traceback):
@@ -15,7 +15,7 @@ def setup_logging():
     logger = logging.getLogger("")
     logger.setLevel(logging.WARNING)
     file_handler = handlers.TimedRotatingFileHandler(
-        Path().home() / ".mate-i3-applet.log",
+        os.path.expanduser("~/.mate-i3-applet.log"),
         when="D",
         backupCount=1,
         delay=True,
