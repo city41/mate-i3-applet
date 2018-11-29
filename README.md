@@ -28,7 +28,7 @@ will not be addressed.
 
 ## How to Install
 
-Requires Python 3, no other dependencies
+Requires Python 3 (minimum 3.5), no other dependencies
 
 1. Grab the most recent [release](https://github.com/city41/mate-i3-applet/releases)
 2. `sudo ./setup.py install`
