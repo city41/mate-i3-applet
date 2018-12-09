@@ -68,7 +68,9 @@ class i3bar(object):
         self.modeLabel.set_use_markup(True)
 
     def set_initial_buttons(self):
-        self.set_workspace_buttons(self.i3conn.get_workspaces())
+        workspaces = self.i3conn.get_workspaces()
+        workspaces = sorted(workspaces, key = lambda i: i['num'])
+        self.set_workspace_buttons(workspaces)
 
     def init_colors(self):
         global DEFAULT_COLORS
@@ -119,6 +121,7 @@ class i3bar(object):
 
     def set_workspace_buttons(self, workspaces):
         logging.debug('set_workspace_buttons')
+        workspaces = sorted(workspaces, key = lambda i: i['num'])
 
         for child in self.box.get_children():
             self.box.remove(child)
