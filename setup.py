@@ -17,7 +17,7 @@ class InstallData(install_data):
 
 setup(
     name="mate-i3-applet",
-    version="2.1.0",
+    version="2.3.0",
     description="MATE i3 Workspace Applet",
     long_description="Applet for MATE Panel showing i3 workspaces and mode.",
     license="BSD",
