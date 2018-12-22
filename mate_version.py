@@ -37,7 +37,7 @@ def import_gtk():
     import gi
 
     version = get_mate_version()
-    if version and version.major < 2 and version.minor < 18:
+    if version and version.major < 2 and version.minor < 16:
         gi.require_version("Gtk", "2.0")
         logging.debug("GTK 2.0 loaded")
     elif version:
