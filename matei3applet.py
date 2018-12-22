@@ -108,6 +108,9 @@ class i3bar(object):
     def set_mode_label_text(self, text):
         if text == 'default':
             self.modeLabel.set_text('')
+        elif all(key in self.colors for key in ('binding_mode_border','binding_mode_bg','binding_mode_text')):
+            textToSet = '<span background="%s" color="%s"><b> %s </b></span>' % (self.colors['binding_mode_bg'], self.colors['binding_mode_text'], text)
+            self.modeLabel.set_text(textToSet)
         else:
             textToSet = '<span background="%s" color="%s"><b> %s </b></span>' % (self.colors['urgent_workspace_bg'], self.colors['urgent_workspace_text'], text)
             self.modeLabel.set_text(textToSet)
