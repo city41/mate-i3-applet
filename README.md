@@ -20,6 +20,10 @@ This applet shows the current state of i3 workspaces when using i3 as your windo
 
 There has been [one report](https://github.com/city41/mate-i3-applet/issues/11#issuecomment-431692546) of the applet not working on Ubuntu MATE 18.10
 
+### Other Distros
+
+**Debian:** It has been reported to work on Debian 10 after installing `gir1.2-matepanelapplet-4.0` package. Discussion [here](https://github.com/city41/mate-i3-applet/issues/23)
+
 ## Only supporting GTK3
 
 MATE 1.18.0 made the switch to GTK. This applet checks MATE version and imports appropriate version of GTK,
