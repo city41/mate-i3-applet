@@ -4,6 +4,12 @@
 
 This applet shows the current state of i3 workspaces when using i3 as your window manager in MATE.
 
+# Unsupported! (as of Aug 15, 2019)
+
+I am sorry but I am not supporting this applet. I built it because it met a need I have. But the truth is I'm not a very good Python programmer, nor do I really know much at all about mate internals or various Linux distros. I don't have the time to learn these things unfortunately.
+
+If anyone is interested in taking over, please let me know by creating an issue here in the repo
+
 ## Features
 1. shows all workspaces in a similar fashion as i3bar
 2. urgent workspaces highlight same as i3bar
