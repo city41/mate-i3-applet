@@ -1,5 +1,8 @@
 # MATE i3 Workspace Applet
 
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+
 ![screenshot](https://raw.github.com/city41/mate-i3-applet/master/screenshot.png)
 
 This applet shows the current state of i3 workspaces when using i3 as your window manager in MATE.
